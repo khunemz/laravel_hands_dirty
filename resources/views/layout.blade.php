@@ -5,9 +5,11 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title></title>
+  <link rel="stylesheet" href="/css/libs.css">
   <link rel="stylesheet" href="/css/app.css">
 </head>
 <body>
+
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -32,5 +34,8 @@
   <div class="container">
     @yield('content')
   </div>
+  <script src="/js/libs.js"></script>
+  @include('flash')
+ 
 </body>
 </html>
