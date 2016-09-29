@@ -3,9 +3,31 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Photo;
 class Flyer extends Model
 {
+  /**
+     * Find the flyer at the given address
+     * @param $query
+     * @param $zip
+     * @param $street
+     * @return mixed
+     */
+    public static function locatedAt($zip, $street)
+    {
+        $street = str_replace('-', ' ', $street);
+        return static::where(compact('zip', 'street'))->firstOrFail();
+    }
+
+
+  public function getPriceAttribute ($price) {
+    return 'THB'.number_format($price);
+  }
+
+  public function addPhoto (Photo $photo) {
+    return $this->photos()->save($photo);
+  }
+
   /**
    * Fillable fields for a flyer
    * @var array
@@ -20,4 +42,5 @@ class Flyer extends Model
   public function photos () {
     return $this->hasMany('App\Photo');
   }
+
 }
