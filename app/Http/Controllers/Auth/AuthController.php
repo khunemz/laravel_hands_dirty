@@ -9,6 +9,11 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller
 {
+    /**
+     * redirect upon success registration
+     * @var string
+     */
+    protected $redirectPath = '/flyers/create';
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
