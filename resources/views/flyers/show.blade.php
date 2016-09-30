@@ -11,6 +11,7 @@
         <div class="row">
           @foreach ($flyer->photos as $photo)
             <div class="col-md-3 gallery__image">
+              <a href="/{{ $photo->path }}" data-litly></a>
               <img src="{{ url($photo->thumbnail_path) }}" class="img-responsive">
             </div>
           @endforeach
