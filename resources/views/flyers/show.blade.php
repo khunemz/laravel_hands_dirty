@@ -27,16 +27,19 @@
     {!! nl2br($flyer->description)!!}
   </div>
   <hr>
+
+  @if($user && $user->owns($flyer))
   <h2>Add your photos</h2>
 
-  <form id="addPhotosForm" 
-    method="POST" 
-    action="{{ route('store_photo_path', [$flyer->zip , $flyer->street]) }}" 
-    class="form-group dropzone"
-    >
+    <form id="addPhotosForm" 
+      method="POST" 
+      action="{{ route('store_photo_path', [$flyer->zip , $flyer->street]) }}" 
+      class="form-group dropzone"
+      >
 
-   {{ csrf_field() }}
-  </form>
+     {{ csrf_field() }}
+    </form>
+  @endif
 @stop
 
 @section('scripts.footer')

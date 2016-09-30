@@ -32,4 +32,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+    public function owns ($relation) {
+      return $relation->user_id == $this->id;
+    }
 }
