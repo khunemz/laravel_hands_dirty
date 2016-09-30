@@ -9,9 +9,7 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
-Route::get('/', function () {
-    return view('pages.home');
-});
+Route::get('/', 'PagesController@home');
 
 Route::resource('flyers', 'FlyersController');
 Route::get('{zip}/{street}' , 'FlyersController@show');

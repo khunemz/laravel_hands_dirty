@@ -9,7 +9,7 @@ class Photo extends Model
 {
   protected $table = 'flyer_photos';
   protected $fillable = ['flyer_id' , 'name', 'thumbnail_path'];
-  protected $baseDir = 'flyer/photos';
+  protected $baseDir = 'images/photos';
   public function flyer () {
     return $this->belongsTo('App\Flyer');
   }
