@@ -8,6 +8,7 @@ use App\Flyer;
 use App\Photo;
 use App\Http\Controllers\Traits\AuthorizesUsers;
 use App\Http\Requests\FlyerRequest as FlyerRequest;
+use App\Http\Requests\ChangeFlyerRequest;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Http\Controllers\Controller;
 
@@ -61,15 +62,7 @@ class FlyersController extends Controller
      * @param string  $street  
      * @param Request $request 
      */
-    public function addPhoto ($zip , $street , Request $request) {
-        $this->validate($request  , [
-            'photo' => 'required|mimes:jpg,jpeg,png,bmp'
-            ]);
-        if (!$this->userCreatedFlyer($request)) {
-            if (! $flyer->ownedBy($this->user)) {
-                $this->unauthorized($request);
-            }
-        }
+    public function addPhoto ($zip , $street , ChangeFlyerRequest $request) {
         $photo = $this->makePhoto($request->file('photo'));
         Flyer::locatedAt($zip, $street)->addPhoto($photo);
     }
