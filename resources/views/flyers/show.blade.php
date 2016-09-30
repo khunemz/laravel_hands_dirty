@@ -11,6 +11,11 @@
         <div class="row">
           @foreach ($flyer->photos as $photo)
             <div class="col-md-3 gallery__image">
+              <form action="/photos/{{$photo->id }}" method="post">
+                {{csrf_field()}}
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="btn btn-danger brn-md" type="submit">Delete</button>
+              </form>
               <a href="/{{ $photo->path }}" data-litly></a>
               <img src="{{ url($photo->thumbnail_path) }}" class="img-responsive">
             </div>

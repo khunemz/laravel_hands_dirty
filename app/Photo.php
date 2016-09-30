@@ -64,4 +64,12 @@ class Photo extends Model
     Image::make($this->filePath())->fit(200)->save($this->thumbnailPath());
   }
 
+  public function delete () {
+    \File::delete([
+      $this->path , 
+      $this->thumbnailPath()
+      ]);
+    parent::delete();
+  }
+
 }
