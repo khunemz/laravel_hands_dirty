@@ -7,6 +7,8 @@ use App\Http\Requests;
 use App\Flyer;
 use App\Photo;
 use App\Http\Requests\FlyerRequest as FlyerRequest;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 
 use App\Http\Controllers\Controller;
 
@@ -14,7 +16,8 @@ class FlyersController extends Controller
 {
     function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['show']]);
+
     }
     /**
      * Display a listing of the resource.
@@ -51,6 +54,26 @@ class FlyersController extends Controller
         return redirect()->back();
     }
 
+
+    /**
+     * Apply a photo to the referenced flyer
+     * @param string  $zip     
+     * @param string  $street  
+     * @param Request $request 
+     */
+    public function addPhoto ($zip , $street , Request $request) {
+        $this->validate($request  , [
+            'photo' => 'required|mimes:jpg,jpeg,png,bmp'
+            ]);
+        $photo = $this->makePhoto($request->file('photo'));
+        Flyer::locatedAt($zip, $street)->addPhoto($photo);
+    }
+
+    protected function makePhoto (UploadedFile $file) 
+    {
+        return Photo::named($file->getClientOriginalName())->move($file);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -62,6 +85,7 @@ class FlyersController extends Controller
         $flyer = Flyer::locatedAt($zip, $street);
         return view('flyers.show', compact('flyer'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -97,18 +121,4 @@ class FlyersController extends Controller
         //
     }
 
-    /**
-     * Apply a photo to the referenced flyer
-     * @param string  $zip     
-     * @param string  $street  
-     * @param Request $request 
-     */
-    public function addPhoto ($zip , $street , Request $request) {
-        $this->validate($request  , [
-            'photo' => 'required|mimes:jpg,jpeg,png,bmp'
-            ]);
-        $photo = Photo::fromForm($request->file('photo'));
-        Flyer::locatedAt($zip, $street)->addPhoto($photo);
-    
-    }
 }

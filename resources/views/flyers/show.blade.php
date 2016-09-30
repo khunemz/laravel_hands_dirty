@@ -6,9 +6,16 @@
       <h2>{!! $flyer->street !!}</h2>
       <h2>{!! $flyer->price !!}</h2>
     </div>
-    <div class="col-md-9">
-      @foreach ($flyer->photos as $photo)
-        <img src="{{ url($photo->path) }}">
+    <div class="col-md-8 gallery">
+      @foreach($flyer->photos->chunk(4) as $set)
+        <div class="row">
+          @foreach ($flyer->photos as $photo)
+            <div class="col-md-3 gallery__image">
+              <img src="{{ url($photo->thumbnail_path) }}" class="img-responsive">
+            </div>
+          @endforeach
+          
+        </div>
       @endforeach
     </div>
   </div>
